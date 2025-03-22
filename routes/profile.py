@@ -15,7 +15,7 @@ def get_current_user(payload: dict = Depends(verify_token), db: Session = Depend
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
-@router.put("/me", response_model=UserResponse)
+@router.put("/me", response_model=UserProfileUpdate)
 def update_current_user(update_data: UserProfileUpdate, payload: dict = Depends(verify_token), db: Session = Depends(get_db)):
     email = payload.get("sub")
     user = db.query(User).filter(User.email == email).first()
