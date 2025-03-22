@@ -1,12 +1,18 @@
 from fastapi import FastAPI
 from routes.auth import router as auth_router  # Sửa import
 from routes.hospitals import router as hospital_router
+from routes.statuses import router as statuses_router
+from routes.predict import router as predict_router
+from routes.examinations import router as examination_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 app.include_router(hospital_router, prefix="/hospitals", tags=["Hospitals"])
+app.include_router(statuses_router, prefix = "/statuses", tags=["statuses"])
+app.include_router(predict_router, prefix="/predict", tags=["Prediction"])
+app.include_router(examination_router, prefix="/examinations", tags=["Examinations"])
 
 @app.get("/")
 def read_root():
