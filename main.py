@@ -4,6 +4,7 @@ from routes.hospitals import router as hospital_router
 from routes.statuses import router as statuses_router
 from routes.predict import router as predict_router
 from routes.examinations import router as examination_router
+from routes.profile import router as profile_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -13,6 +14,7 @@ app.include_router(hospital_router, prefix="/hospitals", tags=["Hospitals"])
 app.include_router(statuses_router, prefix = "/statuses", tags=["statuses"])
 app.include_router(predict_router, prefix="/predict", tags=["Prediction"])
 app.include_router(examination_router, prefix="/examinations", tags=["Examinations"])
+app.include_router(profile_router, prefix = "/profile", tags = ["Profile"])
 
 @app.get("/")
 def read_root():

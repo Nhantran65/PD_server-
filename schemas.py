@@ -9,10 +9,16 @@ class UserCreate(BaseModel):
 
 class UserResponse(BaseModel):
     id: int
-    first_name: str
-    last_name: str
+    first_name:  Optional[str] = None
+    last_name:  Optional[str] = None
     email: str
     role: str
+
+class UserProfileUpdate(BaseModel):
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    profile_picture: Optional[str] = None
+    bio: Optional[str] = None
 
 class Token(BaseModel):
     access_token: str
@@ -112,6 +118,8 @@ class MedicalExaminationResponse(MedicalExaminationCreate):
 
     class Config:
         orm_mode = True
+
+
 
 # class ResultCreate(BaseModel):
 #     medical_examination_form_id: int
