@@ -5,6 +5,7 @@ from models import User
 from schemas import UserCreate, Token
 from auth_utils import create_access_token, verify_password, hash_password
 from datetime import timedelta
+from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter()
 
@@ -22,10 +23,16 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
     return {"message": "User registered successfully"}
 
 @router.post("/login", response_model=Token)
-def login(email: str, password: str, db: Session = Depends(get_db)):
+def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    email = form_data.username  # Swagger gửi username, bạn dùng nó như email
+    password = form_data.password
+
     user = db.query(User).filter(User.email == email).first()
     if not user or not verify_password(password, user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     
-    access_token = create_access_token({"sub": user.email, "role": user.role}, expires_delta=timedelta(minutes=60))
+    access_token = create_access_token(
+        {"sub": user.email, "role": user.role},
+        expires_delta=timedelta(minutes=60)
+    )
     return {"access_token": access_token, "token_type": "bearer"}
