@@ -24,7 +24,7 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    email = form_data.username  # Swagger gửi username, bạn dùng nó như email
+    email = form_data.username  # Swagger send username, using like email
     password = form_data.password
 
     user = db.query(User).filter(User.email == email).first()
