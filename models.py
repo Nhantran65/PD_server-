@@ -86,15 +86,11 @@ class MedicalExaminationForm(Base):
     diagnosis = Column(Boolean, nullable=False)
 
 
+class Result(Base):
+    __tablename__ = "results"
+    id = Column(Integer, primary_key=True, index=True)
+    medical_examination_form_id = Column(Integer, ForeignKey("medical_examination_forms.id"), nullable=False)
+    lime_result_html = Column(JSON, nullable=True)  # ⬅ dùng JSON thay vì TEXT nếu dùng SQLAlchemy
 
-# class Result(Base):
-#     __tablename__ = "results"
-
-#     id = Column(Integer, primary_key=True, index=True)
-#     medical_examination_form_id = Column(Integer, ForeignKey("medical_examination_forms.id"), nullable=False)
-#     predicted_diagnosis = Column(Boolean, nullable=False)  # Kết quả model dự đoán
-#     shap_result_json = Column(JSON, nullable=True)  # Lưu kết quả SHAP
-#     lime_result_json = Column(JSON, nullable=True)  # Lưu kết quả LIME
-#     doctor_decision = Column(Boolean, nullable=True)  # Kết luận cuối cùng của bác sĩ
-
-#     medical_examination = relationship("MedicalExaminationForm", back_populates="result")
+    # Optional: Relationship nếu bạn muốn truy cập result.medical_examination
+    medical_examination = relationship("MedicalExaminationForm", backref="result")

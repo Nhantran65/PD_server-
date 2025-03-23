@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from datetime import date
-from typing import Optional
+from typing import Optional, Dict, Any
 
 class UserCreate(BaseModel):
     email: str
@@ -119,18 +119,12 @@ class MedicalExaminationResponse(MedicalExaminationCreate):
     class Config:
         orm_mode = True
 
+class ResultCreate(BaseModel):
+    medical_examination_form_id: int
+    lime_result_html: Optional[Dict[str, Any]] = None
 
+class ResultResponse(ResultCreate):
+    id: int
 
-# class ResultCreate(BaseModel):
-#     medical_examination_form_id: int
-#     predicted_diagnosis: bool
-#     shap_result_json: Optional[dict] = None
-#     lime_result_json: Optional[dict] = None
-#     doctor_decision: Optional[bool] = None
-
-# class ResultResponse(ResultCreate):
-#     id: int
-
-#     class Config:
-#         orm_mode = True
-#         from_attributes = True
+    class Config:
+        orm_mode = True
