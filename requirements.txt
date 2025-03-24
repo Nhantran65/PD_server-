@@ -1,11 +1,33 @@
 fastapi==0.110.0
 uvicorn==0.27.1
+
 SQLAlchemy==2.0.29
 pymysql==1.1.0
+
+# Xử lý bảo mật và xác thực
 bcrypt==4.1.2
-python-jose[cryptography]==3.3.0
-python-multipart==0.0.9
-python-dotenv==1.0.1
 passlib==1.7.4
 passlib[bcrypt]
-pydantic[email]
+python-jose[cryptography]==3.3.0
+
+# Multipart + môi trường
+python-multipart==0.0.9
+python-dotenv==1.0.1
+
+# Pydantic cho validation
+pydantic[email]==1.10.13  # (tương thích FastAPI)
+
+# Machine Learning
+numpy==1.26.4
+pandas==2.2.1
+scikit-learn==1.4.1.post1
+joblib==1.4.0
+catboost==1.2.5
+
+# Explainable AI
+lime==0.2.0.1
+shap==0.45.0
+
+# Vẽ đồ thị (nếu dùng để test trực quan)
+matplotlib==3.8.3
+seaborn==0.13.2
