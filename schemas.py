@@ -121,10 +121,27 @@ class MedicalExaminationResponse(MedicalExaminationCreate):
 
 class ResultCreate(BaseModel):
     medical_examination_form_id: int
-    lime_result_html: Optional[Dict[str, Any]] = None
+    lime_result_json: Optional[Dict[str, Any]] = None
 
 class ResultResponse(ResultCreate):
     id: int
+
+    class Config:
+        orm_mode = True
+
+# schemas.py
+
+from pydantic import BaseModel
+from typing import Optional
+
+class DoctorDecisionCreate(BaseModel):
+    result_id: int
+    doctor_decision: bool  # ✅ True = PD, False = No PD
+
+class DoctorDecisionResponse(BaseModel):
+    id: int
+    result_id: int
+    doctor_decision: bool
 
     class Config:
         orm_mode = True

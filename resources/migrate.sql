@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS medical_examination_forms (
 CREATE TABLE IF NOT EXISTS results (
   id INT AUTO_INCREMENT PRIMARY KEY,
   medical_examination_form_id INT NOT NULL,
-  lime_result_html TEXT,
+  lime_result_json TEXT,
 
   FOREIGN KEY (medical_examination_form_id)
     REFERENCES medical_examination_forms(id)

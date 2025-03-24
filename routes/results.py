@@ -9,7 +9,7 @@ from model_loader import best_model, scaler, feature_labels  # Ensure you have b
 
 router = APIRouter()
 
-@router.post("/results/lime/{examination_id}")
+@router.post("/lime/{examination_id}")
 def generate_lime_result(examination_id: int, db: Session = Depends(get_db)):
     # 1. Lấy thông tin từ DB
     form = db.query(MedicalExaminationForm).filter_by(id=examination_id).first()
@@ -63,7 +63,7 @@ def generate_lime_result(examination_id: int, db: Session = Depends(get_db)):
     # 5. Lưu vào DB
     result = Result(
         medical_examination_form_id=examination_id,
-        lime_result_html=json.dumps(lime_json, indent=4)
+        lime_result_json=json.dumps(lime_json, indent=4)
     )
 
     db.add(result)
@@ -80,7 +80,7 @@ def get_all_results(db: Session = Depends(get_db)):
         {
             "result_id": r.id,
             "medical_examination_form_id": r.medical_examination_form_id,
-            "lime_result": json.loads(r.lime_result_html) if r.lime_result_html else None
+            "lime_result": json.loads(r.lime_result_json) if r.lime_result_json else None
         }
         for r in results
     ]
@@ -94,5 +94,5 @@ def get_result_by_id(id: int, db: Session = Depends(get_db)):
     return {
         "result_id": result.id,
         "medical_examination_form_id": result.medical_examination_form_id,
-        "lime_result": json.loads(result.lime_result_html) if result.lime_result_html else None
+        "lime_result": json.loads(result.lime_result_json) if result.lime_result_json else None
     }

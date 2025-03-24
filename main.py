@@ -7,6 +7,7 @@ from routes.examinations import router as examination_router
 from routes.profile import router as profile_router
 from routes.users import router as user_router
 from routes.results import router as results_router
+from routes.doctor_decisions import router as doctor_decisions_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -19,6 +20,7 @@ app.include_router(examination_router, prefix="/examinations", tags=["Examinatio
 app.include_router(profile_router, prefix = "/profile", tags = ["Profile"])
 app.include_router(user_router, prefix="/users", tags=["Users"])
 app.include_router(results_router, prefix="/results", tags=["Results"])
+app.include_router(doctor_decisions_router)
 
 @app.get("/")
 def read_root():
@@ -33,6 +35,6 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Cho phép mọi domain truy cập API
     allow_credentials=True,
-    allow_methods=["*"],  # Cho phép tất cả các method (GET, POST, PUT, DELETE)
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, PUT, DELETE)
     allow_headers=["*"],  # Cho phép tất cả headers
 )

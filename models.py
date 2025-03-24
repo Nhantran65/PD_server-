@@ -90,7 +90,15 @@ class Result(Base):
     __tablename__ = "results"
     id = Column(Integer, primary_key=True, index=True)
     medical_examination_form_id = Column(Integer, ForeignKey("medical_examination_forms.id"), nullable=False)
-    lime_result_html = Column(JSON, nullable=True)  # ⬅ dùng JSON thay vì TEXT nếu dùng SQLAlchemy
+    lime_result_json = Column(JSON, nullable=True)  # ⬅ dùng JSON thay vì TEXT nếu dùng SQLAlchemy
 
     # Optional: Relationship nếu bạn muốn truy cập result.medical_examination
     medical_examination = relationship("MedicalExaminationForm", backref="result")
+
+# models.py
+
+class DoctorDecision(Base):
+    __tablename__ = "doctor_decisions"
+    id = Column(Integer, primary_key=True, index=True)
+    result_id = Column(Integer, ForeignKey("results.id", ondelete="CASCADE"), nullable=False)
+    doctor_decision = Column(Boolean, nullable=False)
