@@ -13,6 +13,8 @@ class UserResponse(BaseModel):
     last_name:  Optional[str] = None
     email: str
     role: str
+    class Config:
+        orm_mode = True  
 
 class UserProfileUpdate(BaseModel):
     first_name: Optional[str] = None

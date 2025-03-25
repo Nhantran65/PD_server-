@@ -13,7 +13,7 @@ def get_current_user(payload: dict = Depends(verify_token), db: Session = Depend
     user = db.query(User).filter(User.email == email).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    return user
+    return UserResponse.from_orm(user)  
 
 @router.put("/me", response_model=UserProfileUpdate)
 def update_current_user(update_data: UserProfileUpdate, payload: dict = Depends(verify_token), db: Session = Depends(get_db)):
@@ -27,4 +27,4 @@ def update_current_user(update_data: UserProfileUpdate, payload: dict = Depends(
 
     db.commit()
     db.refresh(user)
-    return user
+    return UserResponse.from_orm(user) 
