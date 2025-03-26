@@ -73,7 +73,7 @@ def generate_lime_result(examination_id: int, db: Session = Depends(get_db)):
     return {"message": "✅ LIME result saved successfully", "result_id": result.id, "lime_result": lime_json}
 
 
-@router.get("/", summary="Lấy tất cả kết quả LIME")
+@router.get("/", summary="Get Explaination from LIME")
 def get_all_results(db: Session = Depends(get_db)):
     results = db.query(Result).all()
     return [
@@ -85,7 +85,7 @@ def get_all_results(db: Session = Depends(get_db)):
         for r in results
     ]
 
-@router.get("/{id}", summary="Lấy kết quả LIME theo ID")
+@router.get("/{id}", summary="Get LIME Explaination by ID")
 def get_result_by_id(id: int, db: Session = Depends(get_db)):
     result = db.query(Result).filter(Result.id == id).first()
     if not result:
